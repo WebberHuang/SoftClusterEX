@@ -1,0 +1,66 @@
+/* 
+#----------------------------------------------------------------------
+#    This file is part of "Soft Cluster EX"
+#    and covered by a BSD-style license, check
+#    LICENSE for detail.
+#
+#    Author:      Webber Huang
+#    Contact:     xracz.fx@gmail.com
+#    Homepage:    http://riggingtd.com
+#----------------------------------------------------------------------
+*/
+
+
+/*
+#----------------------------------------------------------------------
+# Codes below comes from part of AdvancedSkeleton4:
+# http://www.animationstudios.com.au
+# I make a slightly modification to meet my own demands.
+# Thanks, Oyvind Nostdal.
+#----------------------------------------------------------------------
+*/
+
+global string $gShelfTopLevel;
+string $currentShelf = `tabLayout -query -selectTab $gShelfTopLevel`;
+setParent $currentShelf;
+
+string $scriptLocation=`scriptLocation`;
+string $scriptName="Soft Cluster EX";
+string $command="import SoftClusterEX\nSoftClusterEX.launch()";
+string $icon=$scriptLocation+"icons/softClusterEXIcon.png";
+
+// Install button to current shelf
+shelfButton
+	-command $command
+	-annotation $scriptName
+	-label $scriptName
+	-image $icon
+	-style "iconOnly"
+	-sourceType "python"
+;
+
+print ("\n// "+$scriptName+" has been added to current shelf.\n");
+
+// Helper functions for locating script's location
+global proc scriptLocator (){}
+
+global proc string scriptLocation ()
+{
+    string $whatIs=`whatIs scriptLocator`;
+    string $fullPath=`substring $whatIs 25 999`;
+    string $buffer[];
+    int $numTok=`tokenize $fullPath "/" $buffer`;
+    int $numLetters=size($fullPath);
+    int $numLettersLastFolder=size($buffer[$numTok-1]);
+    string $scriptLocation=`substring $fullPath 1 ($numLetters-$numLettersLastFolder)`;
+    return $scriptLocation;
+}
+
+/*
+#----------------------------------------------------------------------
+# Codes above comes from part of AdvancedSkeleton4:
+# http://www.animationstudios.com.au
+# I make a slightly modification to meet my own demands.
+# Thanks, Oyvind Nostdal.
+#----------------------------------------------------------------------
+*/
