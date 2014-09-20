@@ -1,5 +1,8 @@
 History
 ----------------------------------------------
+#### 2014-09-20: v3.0.0 by Webber Huang
+  - NEW: Commit softSelectionQuery's source code
+
 #### 2014-09-07: v3.0.0 by Webber Huang
   - NEW: Fully supports working with joint, create, mirror,
     redefine, export, import weight, just like play with cluster  
