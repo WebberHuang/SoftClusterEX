@@ -27,7 +27,6 @@ class MainWindow(object):
     def __init__(self):
         """Constructor"""
         super(MainWindow, self).__init__()
-
         self.title = 'Soft Cluster EX'
         self.window = 'softClusterEXWin'
         self.mainTabLayout = None
@@ -38,19 +37,19 @@ class MainWindow(object):
     def createUI(self):
         """"""
         if cmds.window(self.window, ex=1): cmds.deleteUI(self.window)
-        cmds.window(self.window, t='%s v%s' % (self.title, setup.getVersion()), w=230, s=0, rtf=1)
+        cmds.window(self.window, t='%s v%s' % (self.title, setup.getVersion()), w=230, h=260, s=1, rtf=1)
 
         # setup layout and ui elements
         form = cmds.formLayout()
         self.mainTabLayout = cmds.tabLayout(childResizable=True)
         cmds.formLayout( form,
-                        edit=True,
-                        attachForm=(
-                                    (self.mainTabLayout, 'top', 0),
-                                    (self.mainTabLayout, 'left', 0),
-                                    (self.mainTabLayout, 'bottom', 0),
-                                    (self.mainTabLayout, 'right', 0)
-                                   ) )
+                         edit=True,
+                         attachForm=(
+                                     (self.mainTabLayout, 'top', 0),
+                                     (self.mainTabLayout, 'left', 0),
+                                     (self.mainTabLayout, 'bottom', 0),
+                                     (self.mainTabLayout, 'right', 0)
+                                    ) )
         # Setup tab ui from modules
         tabModules = []
         for m in scUtil.findAllModules('ui'):
@@ -76,3 +75,8 @@ class MainWindow(object):
         self.tabs.append(tab)
         
         return tab
+    
+    #----------------------------------------------------------------------
+    def setHeight(self, h):
+        """"""
+        cmds.window(self.window, e=1, h=h)

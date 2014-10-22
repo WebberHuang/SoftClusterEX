@@ -12,10 +12,11 @@
 
 
 __author__              = 'Webber Huang'
-__buildVersionID__      = '3.0.0'
+__buildVersionID__      = '3.0.1'
 __website__             = 'http://riggingtd.com/downloads/soft-cluster-ex/'
 __license__             = 'BSD license'
 __BANNER__              = 'softClusterEXBanner.png'
+__BANNER_JOINT__        = 'softClusterEXBannerJ.png'
 __ICON__                = 'softClusterEXIcon.png'
 
 __SUPPORTTYPE_LABEL__ = {'mesh': 'Polygon',
@@ -74,6 +75,11 @@ def getBanner():
     """Constructor"""
     path = os.path.join(getModulePath(), 'icons')
     return os.path.join(path, __BANNER__)
+
+def getBannerJ():
+    """Constructor"""
+    path = os.path.join(getModulePath(), 'icons')
+    return os.path.join(path, __BANNER_JOINT__)
 
 def getIcon():
     """Constructor"""

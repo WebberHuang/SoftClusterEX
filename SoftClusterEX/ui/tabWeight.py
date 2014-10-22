@@ -193,41 +193,47 @@ class TabWeight(baseTab.BaseTab):
         """"""
         sel = self.__selectInfluence()
         
-        fileFilter = "Soft Cluster EX Weight Data (*.scw)"
-        filePath = cmds.fileDialog2(fm=0, 
-                                   ff=fileFilter,
-                                   cap='Export Weight Data',
-                                   ds=2,
-                                   okc='Export')[0]
+        try:
+            fileFilter = "Soft Cluster EX Weight Data (*.scw)"
+            filePath = cmds.fileDialog2(fm=0, 
+                                       ff=fileFilter,
+                                       cap='Export Weight Data',
+                                       ds=2,
+                                       okc='Export')[0]
             
-        if cmds.objectType( sel, isType='joint' ):
-            scData.JointFn.exportWeight(sel, filePath)
-        elif cmds.listRelatives(sel, s=1, typ='clusterHandle'):            
-            scData.ClusterFn.exportWeight(sel, filePath)
-        else: cmds.error("%s is unsupported type!" % sel)
+            if cmds.objectType( sel, isType='joint' ):
+                scData.JointFn.exportWeight(sel, filePath)
+            elif cmds.listRelatives(sel, s=1, typ='clusterHandle'):
+                scData.ClusterFn.exportWeight(sel, filePath)
+            else: cmds.error("%s is unsupported type!" % sel)
+            
+            om.MGlobal.displayInfo('Export to %s success.' % filePath)
+        except:
+            cmds.warning("Nothing to be exported.")
         
-        om.MGlobal.displayInfo('Export to %s success.' % filePath)
-    
     #----------------------------------------------------------------------
     def importWeight(self):
         """"""
         sel = self.__selectInfluence()
         
-        fileFilter = "Soft Cluster EX Weight Data (*.scw)"
-        filePath = cmds.fileDialog2(fm=1, 
-                                   ff=fileFilter,
-                                   cap='Import Weight Data',
-                                   dialogStyle=2,
-                                   okc='Import')[0]
-        
-        if cmds.objectType( sel, isType='joint' ):
-            scData.JointFn.importWeight(sel, filePath)
-        elif cmds.listRelatives(sel, s=1, typ='clusterHandle'):
-            scData.ClusterFn.importWeight(sel, filePath)
-        else: cmds.error("%s is unsupported type!" % sel)
-
-        om.MGlobal.displayInfo('Import weight from %s success.' % filePath)
+        try:
+            fileFilter = "Soft Cluster EX Weight Data (*.scw)"
+            filePath = cmds.fileDialog2(fm=1, 
+                                       ff=fileFilter,
+                                       cap='Import Weight Data',
+                                       dialogStyle=2,
+                                       okc='Import')[0]
+            
+            if cmds.objectType( sel, isType='joint' ):
+                scData.JointFn.importWeight(sel, filePath)
+            elif cmds.listRelatives(sel, s=1, typ='clusterHandle'):
+                scData.ClusterFn.importWeight(sel, filePath)
+            else: cmds.error("%s is unsupported type!" % sel)
     
+            om.MGlobal.displayInfo('Import weight from %s success.' % filePath)
+        except:
+            cmds.warning("Nothing to be imported.")
+        
     #----------------------------------------------------------------------
     def toggleButton(self):
         """"""

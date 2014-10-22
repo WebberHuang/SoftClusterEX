@@ -6,7 +6,7 @@ SoftClusterEX
     Author:      Webber Huang  
     Contact:     xracz.fx@gmail.com  
     Homepage:    http://riggingtd.com  
-    Version:     3.0.0  
+    Version:     3.0.1  
     Requires:    Maya 2011 x64 or above  
     Platform:    Windows 64bit, Mac OS X, Linux 64bit  
     License:     BSD license  

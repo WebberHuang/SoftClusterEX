@@ -34,6 +34,7 @@ class TabCreate(baseTab.BaseTab):
     #----------------------------------------------------------------------
     def __init__(self):
         super(TabCreate, self).__init__()
+        self.mainFormLayout = ''
         self.supportTypeCB = []
         self.checkAllCB = ''
         self.excludeScrollList = ''
@@ -44,13 +45,14 @@ class TabCreate(baseTab.BaseTab):
         self._supportTypes = setup.getSupportTypes()
         self.keepCheck = ''
         self.jointCheck = ''
+        self.createBtn = ''
 
     #----------------------------------------------------------------------
     def createUI(self, parent):
         """"""
         layout = cmds.frameLayout( lv=0, bv=0, cll=False, mh=4, mw=4, p=parent)
         
-        form = cmds.formLayout()
+        self.mainFormLayout = cmds.formLayout()
         optLayout = self.installOption()
 
         # Install exclude object list
@@ -64,29 +66,29 @@ class TabCreate(baseTab.BaseTab):
         convertForm = self.installConvertButton()
         
         # Arrage UI elements
-        cmds.formLayout(form,
-                       e=1,
-                       af=[(optLayout, 'left', 0),
-                           (optLayout, 'right', 0),
-                           (optLayout, 'top', 0),
-                           (excludeList, 'left', 0),
-                           (excludeList, 'right', 0),
-                           (excludeList, 'top', 0),
-                           (gradient, 'left', 0),
-                           (gradient, 'right', 0),
-                           (gradient, 'top', 0),
-                           (createForm, 'top', 0), 
-                           (createForm, 'bottom', 0), 
-                           (createForm, 'right', 0),
-                           (createForm, 'left', 0),
-                           (convertForm, 'bottom', 0), 
-                           (convertForm, 'right', 0),
-                           (convertForm, 'left', 0)],
-                       
-                       ac=[(excludeList, 'top', 2, optLayout),
-                           (gradient, 'top', 2, excludeList), 
-                           (createForm, 'top', 2, gradient), 
-                           (createForm, 'bottom', 2, convertForm)])
+        cmds.formLayout(self.mainFormLayout,
+                        e=1,
+                        af=[(optLayout, 'left', 0),
+                            (optLayout, 'right', 0),
+                            (optLayout, 'top', 0),
+                            (excludeList, 'left', 0),
+                            (excludeList, 'right', 0),
+                            (excludeList, 'top', 0),
+                            (gradient, 'left', 0),
+                            (gradient, 'right', 0),
+                            (gradient, 'top', 0),
+                            (createForm, 'top', 0), 
+                            (createForm, 'bottom', 0), 
+                            (createForm, 'right', 0),
+                            (createForm, 'left', 0),
+                            (convertForm, 'bottom', 0), 
+                            (convertForm, 'right', 0),
+                            (convertForm, 'left', 0)],
+                        
+                        ac=[(excludeList, 'top', 2, optLayout),
+                            (gradient, 'top', 2, excludeList), 
+                            (createForm, 'top', 2, gradient), 
+                            (createForm, 'bottom', 2, convertForm)])
         
         cmds.setParent( '..' )
         cmds.setParent( '..' )
@@ -95,7 +97,13 @@ class TabCreate(baseTab.BaseTab):
     #----------------------------------------------------------------------
     def installOption(self):
         """"""
-        layout = cmds.frameLayout( l='Options:', bs='etchedIn', cl=True, cll=True)
+        layout = cmds.frameLayout( "optionLayout",
+                                   l='Options:',
+                                   bs='etchedIn',
+                                   cl=True,
+                                   cll=True,
+                                   ec=lambda *args: self.resizeMainWindow(),
+                                   cc=lambda *args: self.resizeMainWindow())
         # Install support types check boxes
         self.installSupportTypeCheckbox()
         
@@ -133,7 +141,13 @@ class TabCreate(baseTab.BaseTab):
     #----------------------------------------------------------------------
     def installExcludeObjectList(self):
         """"""
-        layout = cmds.frameLayout( l='Exclude Objects:', borderStyle='etchedIn', cl=True, cll=True)
+        layout = cmds.frameLayout( "exclusiveLayout",
+                                   l='Exclude Objects:',
+                                   borderStyle='etchedIn',
+                                   cl=True,
+                                   cll=True,
+                                   ec=lambda *args: self.resizeMainWindow(),
+                                   cc=lambda *args: self.resizeMainWindow())
         self.excludeScrollList = cmds.textScrollList(allowMultiSelection=True)
         cmds.popupMenu()
         cmds.menuItem(l='Add', c=lambda *args: self.addExcludeObjectsCmd())
@@ -190,7 +204,15 @@ class TabCreate(baseTab.BaseTab):
     #----------------------------------------------------------------------
     def installFalloffGradient(self):
         """"""
-        layout = cmds.frameLayout( l='Falloff:', borderStyle='etchedIn', cl=True, cll=True, mw=5, mh=5)
+        layout = cmds.frameLayout( "falloffLayout",
+                                   l='Falloff:',
+                                   borderStyle='etchedIn',
+                                   cl=True,
+                                   cll=True,
+                                   mw=5,
+                                   mh=5,
+                                   ec=lambda *args: self.resizeMainWindow(),
+                                   cc=lambda *args: self.resizeMainWindow())
         
         # Install falloff mode scroll List
         cmds.rowLayout(nc=2, adj=1)
@@ -216,32 +238,42 @@ class TabCreate(baseTab.BaseTab):
     #----------------------------------------------------------------------
     def installCreateButton(self):
         """"""
+        layout = cmds.frameLayout("createLayout", lv=False, bv=False)
         form = cmds.formLayout()
-        btn = cmds.iconTextButton(st='iconOnly',
-                                  l='Create',
-                                  i=setup.getBanner(),
-                                  c=lambda *args: self.createSoftDeformerCmd() )
+        self.createBtn = cmds.iconTextButton(st='iconOnly',
+                                             l='Create',
+                                             ann="Create cluster by default, turn on \"J\" to create joint.",
+                                             c=lambda *args: self.createSoftDeformerCmd() )
         
-        self.jointCheck = cmds.iconTextCheckBox(st='textOnly', l='   J   ',  ann="Create joint")
+        self.jointCheck = cmds.iconTextCheckBox(st='textOnly',
+                                                l='   J   ',
+                                                ann="Create joint",
+                                                cc=lambda *args: self.setCreateBtnIcon())
         cmds.formLayout(form,
                         e=1,
-                        af=[(btn, 'left', 0),
-                            (btn, 'right', 0),
-                            (btn, 'top', 0),
-                            (btn, 'bottom', 0),
+                        af=[(self.createBtn, 'left', 0),
+                            (self.createBtn, 'right', 0),
+                            (self.createBtn, 'top', 0),
+                            (self.createBtn, 'bottom', 0),
                             (self.jointCheck, 'right', 0),
                             (self.jointCheck, 'top', 0)]
                         )
         cmds.setParent( '..' )
-        return form
+        cmds.setParent( '..' )
+        
+        self.setCreateBtnIcon()
+        return layout
           
     #----------------------------------------------------------------------
     def installConvertButton(self):
         """"""
-        return cmds.button( l='Convert',
-                             ann='Cluster <-->  Joint', 
-                             bgc=(153.0/255, 217.0/255, 234.0/255),
-                             c=lambda *args: self.convertDeformerCmd() )
+        layout = cmds.frameLayout("convertLayout", lv=False, bv=False)
+        cmds.button( l='Convert',
+                     ann='Cluster <-->  Joint', 
+                     bgc=(153.0/255, 217.0/255, 234.0/255),
+                     c=lambda *args: self.convertDeformerCmd() )
+        cmds.setParent( '..' )
+        return layout
 
     #----------------------------------------------------------------------
     def addExcludeObjectsCmd(self):
@@ -401,6 +433,25 @@ class TabCreate(baseTab.BaseTab):
                 break
 
         cmds.checkBox(self.checkAllCB, e=1, v=enableAll)
+    
+    #----------------------------------------------------------------------
+    def setCreateBtnIcon(self):
+        """"""
+        if cmds.iconTextCheckBox(self.jointCheck, q=1, v=1):
+            cmds.iconTextButton(self.createBtn, e=1, i=setup.getBannerJ())
+        else:
+            cmds.iconTextButton(self.createBtn, e=1, i=setup.getBanner())
+    
+    #----------------------------------------------------------------------
+    def resizeMainWindow(self):
+        """"""
+        totalHeight = 0
+        for child in cmds.formLayout(self.mainFormLayout, q=1, ca=1):
+            h = cmds.frameLayout(child, q=1, h=1)
+            if cmds.frameLayout(child, q=1, collapse=1): h = 20
+            totalHeight += h
+
+        self.parentWindow.setHeight(totalHeight)
 
 
 #----------------------------------------------------------------------
