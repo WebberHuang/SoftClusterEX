@@ -1,11 +1,14 @@
 History
 ----------------------------------------------
+#### 2015-05-14: v3.0.1 by Webber Huang
+  - UPDATE: Compatible with Maya 2016
+    
 #### 2014-10-22: v3.0.1 by Webber Huang
   - NEW: A new icon to indicate which type of deformer will be 
 	created for create button 
 
   - FIXED: Window fail to resize properly in maya 2015
-  - 
+
 #### 2014-09-20: v3.0.0 by Webber Huang
   - NEW: Commit softSelectionQuery's source code
 
