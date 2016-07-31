@@ -22,13 +22,7 @@ Description:
 Install:
 ----------------------------------------------
   1. Place SoftClusterEX folder into your maya script path.
-    e.g., C:/Users/YourUsername/Documents/maya/scripts/
-
-    * NOTE 1: Please remove softClusterEX.py and softClusterEX.pyc first if you ever 
-      installed the 1.x version before.
-    * NOTE 2: Please remove the softSelectionQuery plugins from your plugin path 
-      (e.g., C:/Program Files/Autodesk/Maya<Version>/bin/plug-ins/) if you ever 
-      installed 2.6.0 version or older.  
+    e.g., C:/Users/YourUsername/Documents/maya/scripts/ 
 
   2. Drag "install.mel" into maya scene, a new button will appear in your current shelf, 
      click it to launch. (Recommend!)  

@@ -1,5 +1,9 @@
 History
 ----------------------------------------------
+#### 2016-07-31: v3.0.1 by Webber Huang
+  - UPDATE: Compiled against Maya 2017
+  - UPDATE: Refine file structure, make it works as a maya module
+
 #### 2015-05-14: v3.0.1 by Webber Huang
   - UPDATE: Compatible with Maya 2016
     
