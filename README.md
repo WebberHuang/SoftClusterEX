@@ -1,16 +1,19 @@
-===============================
+
 SoftClusterEX
-===============================
+==============
 
     Toolname:    Soft Cluster EX  
     Author:      Webber Huang  
     Contact:     xracz.fx@gmail.com  
     Homepage:    http://riggingtd.com  
     Version:     3.0.1  
-    Requires:    Maya 2011 x64 or above  
+    Requires:    Maya 2011 x64 ~ Maya 2017  
     Platform:    Windows 64bit, Mac OS X, Linux 64bit  
     License:     BSD license  
 
+NOTE:
+------
+  **This project has been DEPRECATED and is no longer being developed.** Sorry I don't have time to support this tool anymore, user will need to compile the plugin by their own to make it run on latest maya, or rewrite the plugin with python.
 
 Description:
 ----------------------------------------------
