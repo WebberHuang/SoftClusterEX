@@ -5,7 +5,6 @@ SoftClusterEX
     Toolname:    Soft Cluster EX  
     Author:      Webber Huang  
     Contact:     xracz.fx@gmail.com  
-    Homepage:    http://riggingtd.com  
     Version:     3.0.1  
     Requires:    Maya 2011 x64 ~ Maya 2017  
     Platform:    Windows 64bit, Mac OS X, Linux 64bit  
@@ -83,8 +82,3 @@ Todo:
 Limitation
 ----------------------------------------------
   - Joint function can't work with subdiv since MFnSkinCluster is incompatible with this type of geometry  
-
-
-Feedback:
-----------------------------------------------
-Bugs, questions and suggestions to xracz.fx@gmail.com
