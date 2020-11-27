@@ -4,7 +4,6 @@ SoftClusterEX
 
     Toolname:    Soft Cluster EX  
     Author:      Webber Huang  
-    Contact:     xracz.fx@gmail.com  
     Version:     3.0.1  
     Requires:    Maya 2011 x64 ~ Maya 2017  
     Platform:    Windows 64bit, Mac OS X, Linux 64bit  
@@ -72,11 +71,6 @@ Features:
     - exo -excludeObjects  String (multi-use): set exclude objects
     - t -types           String (multi-use):   set support types
     - w -weights:                              return weights of influenced components
-
-
-Todo:
-----------------------------------------------
-  - None  
 
 
 Limitation
